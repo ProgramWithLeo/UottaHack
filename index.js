@@ -3,15 +3,41 @@ const c = canvas.getContext('2d')
 
 canvas.width = 1080
 canvas.height = 600
+// 34 tiles tall
+const collisionsMap = []
+for (let i = 0; i < collisions.length; i+= 60){
+    collisionsMap.push(collisions.slice(i, i+60))
+}
 
-c.fillStyle = 'white'
-c.fillRect(0, 0, canvas.width, canvas.height)
+class Boundary {
+    constructor({position}) {
+        this.position = position
+        this.width = 48
+        this.height = 48
+    }
+
+    draw() {
+        c.fillStyle = 'red'
+        c.fillRect(this.position.x, this.position.y, this.width, this.height)
+    }
+}
+
+const boundaries = []
+
+collisionsMap.forEach((row, i) => {
+    row.forEach((symbol, j) => {
+        boundaries.push(new Boundary({position: {
+            x: 0,
+            y: 0
+        }}))
+    })
+})
 
 const image = new Image()
-image.src = './img/map.png'
+image.src = './imgs/map.png'
 
 const playerImage = new Image()
-playerImage.src = './img/playerDown.png'
+playerImage.src = './imgs/playerDown.png'
 
 class Sprite {
     constructor({ position, velocity, image }) {
