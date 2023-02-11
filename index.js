@@ -5,11 +5,14 @@ canvas.width = 1080
 canvas.height = 600
 // 34 tiles tall
 
+//creates area that follows character as the user moves
 const collisionsMap = []
 for (let i = 0; i < collisions.length; i+= 60){
     collisionsMap.push(collisions.slice(i, i+60))
 }
 
+
+//battlezones remain in the same position throughout the game
 const battleZonesMap = []
 for (let i = 0; i < battleZonesData.length; i+= 60){
     battleZonesMap.push(battleZonesData.slice(i, i+60))
@@ -66,6 +69,7 @@ battleZonesMap.forEach((row, i) => {
 console.log(battleZones)
 
 
+//player assests 
 const image = new Image()
 image.src = './imgs/map.png'
 
