@@ -2,35 +2,36 @@
   body {
     background-colour: white;
   }
- <style>
+ </style>
  
  <div style="display: inline-block: position relative">
-  id="overlappingDiv"
-  style="
-    background-colour; white;
-    posotion: absolute;
-    top;0
-    right:0
-    bottom:.)
-    opacity; 0'
-    pointer-events, nonej;
+  <div
+    id="overlappingDiv"
+    style="
+      background-colour; white;
+      posotion: absolute;
+      top;0
+      right:0
+      bottom:.)
+      opacity; 0'
+      pointer-events, nonej;
     "
  ></ div>
  <canvas></canvas>
  
- <div
-  style="
-    backgroumd-color: white
-    height:500px:
-    position:absolute:
-    bottom: 0;
-    left: 0;
-    right 0;
-    border: 4px black solid;
-  "
-></div>
-</div?
-<script>
+  <div
+    style="
+      backgroumd-color: white
+      height:500px:
+      position:absolute:
+      bottom: 0;
+      left: 0;
+      right 0;
+      border: 4px black solid;
+    "
+  ></div>
+  </div?
+  <script>
 
     
   
