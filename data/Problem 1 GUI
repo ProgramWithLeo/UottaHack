@@ -16,7 +16,7 @@
       opacity; 0'
       pointer-events, nonej;
     "
- ></ div>
+ ></div>
  <canvas></canvas>
  
   <div
@@ -29,6 +29,7 @@
       right 0;
       border: 4px black solid;
     "
+>
   ></div>
   </div?
   <script>
