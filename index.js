@@ -15,6 +15,8 @@ for (let i = 0; i < battleZonesData.length; i+= 60){
     battleZonesMap.push(battleZonesData.slice(i, i+60))
 }
 
+console.log(battleZonesMap)
+
 class Boundary {
     static width = 32
     static height = 32
@@ -23,10 +25,10 @@ class Boundary {
         this.width = 32
         this.height = 32
     }
-
+    // comment out if you dont want collisions / battlezones
     draw() {
-        //c.fillStyle = 'red'
-        //c.fillRect(this.position.x, this.position.y, this.width, this.height)
+        c.fillStyle = 'red'
+        c.fillRect(this.position.x, this.position.y, this.width, this.height)
     }
 }
 
@@ -53,7 +55,7 @@ const battleZones = []
 
 battleZonesMap.forEach((row, i) => {
     row.forEach((symbol, j) => {
-        if (symbol == 213){
+        if (symbol == 220){
             battleZones.push(new Boundary({position: {
                 x: j * Boundary.width + offset.x,
                 y: i * Boundary.height + offset.y
@@ -163,6 +165,9 @@ function rectangularCollision({rectangle1, rectangle2}){
         rectangle1.position.y <= rectangle2.position.y + rectangle2.height &&
         rectangle1.position.y + rectangle1.height >= rectangle2.position.y)
 }
+const battle = {
+    initiated: false
+}
 function animate() {
     window.requestAnimationFrame(animate)
     background.draw()
@@ -174,6 +179,9 @@ function animate() {
     })
     player.draw()
 
+    if (battle.initiated) return
+
+    // activate a battle 
     if (keys.w.pressed || keys.a.pressed || keys.s.pressed || keys.d.pressed){
         for (let i = 0; i < battleZones.length; i++){
             const battleZone = battleZones[i]
@@ -183,6 +191,8 @@ function animate() {
                 rectangle2: battleZone
             }) && overlappingArea > (player.width * player.height) / 2
             )   {
+                battle.initiated = true
+                console.log("battle activate")
                 break
             }
         }
