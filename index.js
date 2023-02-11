@@ -1,6 +1,5 @@
 const canvas = document.querySelector('canvas')
 const c = canvas.getContext('2d')
-console.log(battleZonesData)
 
 canvas.width = 1080
 canvas.height = 600
@@ -168,8 +167,12 @@ function rectangularCollision({rectangle1, rectangle2}){
         rectangle1.position.y + rectangle1.height >= rectangle2.position.y)
 }
 
+const battle = {
+    initiated: false
+}
+
 function animate() {
-    window.requestAnimationFrame(animate)
+    const animationId = window.requestAnimationFrame(animate)
     background.draw()
     boundaries.forEach(boundary => {
         boundary.draw()
@@ -179,6 +182,12 @@ function animate() {
     })
     player.draw()
     
+    let moving = true
+    player.moving = false
+
+
+    if (battle.initiated) return
+
     if (keys.w.pressed || keys.a.pressed || keys.s.pressed || keys.d.pressed) {
         for (let i = 0; i < battleZones.length; i++){
             const battleZone = battleZones[i]
@@ -186,16 +195,30 @@ function animate() {
             if (rectangularCollision({
                 rectangle1: player,
                 rectangle2: battleZone
-            }) //&& overlappingArea > (player.width * player.height) / 2
+            }) && Math.random() < 0.01 //&& overlappingArea > (player.width * player.height) / 2
             ){
-                console.log('battle zone collision')
+                console.log('activate battle')
+                window.cancelAnimationFrame(animationId)
+
+                battle.initiated = true
+                gsap.to('#overlappingDiv', {
+                    opacity: 1,
+                    repeat: 3,
+                    yoyo: true,
+                    duration: 0.4,
+                    onComplete(){
+                        gsap.to('#overlappingDiv', {
+                            opacity:1 ,
+                            duration: 0.4
+                        })
+                        animateBattle()
+                    }
+                })
                 break
             }
         }
     }
 
-    let moving = true
-    player.moving = false
     if (keys.w.pressed && lastKey === 'w'){ 
         player.moving = true
         player.image = player.sprites.up
@@ -284,6 +307,11 @@ function animate() {
     }
 }
 animate()
+
+function animateBattle(){
+    window.requestAnimationFrame(animateBattle)
+    
+}
 
 let lastKey = ''
 window.addEventListener('keydown', (e) => {
